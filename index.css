@@ -43,7 +43,7 @@ h1 {
   justify-content: space-around;
 }
 .board {
-  width: 200px;
+  width: 180px;
   height: 30px;
   background-color: #f738fc;
   position: absolute;
@@ -53,6 +53,19 @@ h1 {
   animation-iteration-count: infinite;
 }
 @keyframes shadow {
-  from { box-shadow: #f738fc 10px 15px 60px 10px;}
-  to { box-shadow: #00eefb  10px 15px 60px 10px;}
+  from {
+    box-shadow: #f738fc 10px 15px 60px 10px;
+  }
+  to {
+    box-shadow: #00eefb 10px 15px 60px 10px;
+  }
+}
+@media screen and (min-width: 820px) {
+  .grid {
+    width: 730px;
+    height: 536px;
+  }
+  .container {
+    gap: 20px;
+  }
 }
