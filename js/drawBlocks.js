@@ -1,12 +1,12 @@
 const blocks = document.querySelector(".blocks");
 const grid = document.querySelector(".grid");
 
-const blockWidth = grid.clientWidth / 7;
+const blockWidth = grid.clientWidth / 6;
 
 let colors = ["#00eefb", "#f738fc"];
 
 export function DrawBlocks() {
-  for (let i = 0; i < 6 * 6; i++) {
+  for (let i = 0; i < 5 * 5; i++) {
     let color = Math.floor(Math.random() * colors.length);
     const block = document.createElement("div");
     block.style.cssText = `
