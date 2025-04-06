@@ -1,6 +1,3 @@
-import { DrawBlocks } from "./js/drawBlocks.js";
-import { DrawBoard } from "./js/board.js";
+import { Game } from "./js/drawBlocks.js";
 
-DrawBlocks();
-
-DrawBoard();
+Game();
