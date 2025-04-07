@@ -79,9 +79,10 @@ function moveBall() {
   let boundriesPadlle = paddle.getBoundingClientRect();
 
   if (
-    boundriesBall.bottom + speedBall >= boundriesPadlle.top &&
+    boundriesBall.bottom + speedBall > boundriesPadlle.top &&
     boundriesBall.right >= boundriesPadlle.left &&
-    boundriesBall.left <= boundriesPadlle.right
+    boundriesBall.left <= boundriesPadlle.right &&
+    boundriesBall.top <= boundriesPadlle.bottom
   ) {
     let collidePoint =
       boundriesBall.x - (boundriesPadlle.x + boundriesPadlle.width / 2);
@@ -97,9 +98,26 @@ function moveBall() {
   } else if (startY + ballDetails.y <= 0) {
     ballDetails.velocityY *= -1;
   } else if (startY + ballDetails.y + ball.clientHeight >= grid.clientHeight) {
-    console.log("zz");
-
-    ballDetails.velocityY *= -1;
+    gameStarted = false;
+    leftClicked = false;
+    rightClicked = false;
+    paddleDetails.translateX = 0;
+    paddle.style.transform = `translateX(${paddleDetails.translateX}px)`;
+    ballDetails.x = 0;
+    ballDetails.y = 0;
+    ballDetails.velocityX = 0;
+    ballDetails.velocityY = 0;
+    ball.style.transform = `translateX(${ballDetails.x}px) translateY(${ballDetails.y}px)`;
+    document.addEventListener("keyup", function start(e) {
+      if (e.key === " ") {
+        const p = [-speedBall, speedBall, 0];
+        let i = Math.floor(Math.random() * p.length);
+        ballDetails.velocityX = p[i];
+        ballDetails.velocityY = speedBall;
+        gameStarted = true;
+        document.removeEventListener("keyup", start);
+      }
+    });
   } else if (startX + ballDetails.x <= 0) {
     ballDetails.velocityX *= -1;
   }
