@@ -7,7 +7,7 @@ const blockWidth = grid.clientWidth / 6;
 const startX = grid.clientWidth / 2 - ball.clientHeight / 2;
 const startY =
   grid.clientHeight - paddle.clientHeight - ball.clientHeight * 2.3;
-const PaddleMB = 30;
+const PaddleMB = 20;
 let leftClicked = false;
 let rightClicked = false;
 let gameStarted = false;
@@ -52,7 +52,7 @@ function DrawBlocks() {
     const block = document.createElement("div");
     block.style.cssText = `
         width: ${blockWidth}px;
-        height: 30px;
+        height: 20px;
         background-color: ${colors[color]};
         box-sizing: border-box;
         margin-bottom: 20px;
@@ -79,7 +79,7 @@ function moveBall() {
   let boundriesPadlle = paddle.getBoundingClientRect();
 
   if (
-    boundriesBall.bottom > boundriesPadlle.top &&
+    boundriesBall.bottom + speedBall >= boundriesPadlle.top &&
     boundriesBall.right >= boundriesPadlle.left &&
     boundriesBall.left <= boundriesPadlle.right
   ) {

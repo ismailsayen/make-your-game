@@ -17,7 +17,7 @@
   gap: 50px;
   background-image: linear-gradient(to top, #00eefb, #f738fc);
 }
-.score-board{
+.score-board {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -38,7 +38,9 @@
 h1 {
   font-family: "PixelFont";
 }
-#score,.time,.life {
+#score,
+.time,
+.life {
   font-size: 2em;
   font-weight: bold;
   color: white;
@@ -46,7 +48,7 @@ h1 {
   display: flex;
   align-items: center;
 }
-#score img{
+#score img {
   width: 45px;
   height: 45px;
 }
@@ -57,20 +59,21 @@ h1 {
 }
 .paddle {
   width: 180px;
-  height: 30px;
+  height: 10px;
   background-color: #f738fc;
   position: absolute;
   border-radius: 8px;
   position: absolute;
 }
-.ball{
-  width: 30px;
-  height: 30px;
-  background-color: black;
+.ball {
+  width: 20px;
+  height: 20px;
+  background-color: white;
   border-radius: 50%;
   position: absolute;
+  margin-bottom: 10px;
 }
-.life img{
+.life img {
   width: 50px;
   height: 50px;
 }
