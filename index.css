@@ -27,6 +27,7 @@
   background-size: cover;
   padding: 7px 14px;
   position: relative;
+  overflow: hidden;
 }
 h1 {
   font-family: "PixelFont";
@@ -53,6 +54,10 @@ h1 {
   animation-iteration-count: infinite;
 }
 @keyframes shadow {
-  from { box-shadow: #f738fc 10px 15px 60px 10px;}
-  to { box-shadow: #00eefb  10px 15px 60px 10px;}
+  from {
+    box-shadow: #f738fc 10px 15px 60px 10px;
+  }
+  to {
+    box-shadow: #00eefb 10px 15px 60px 10px;
+  }
 }
