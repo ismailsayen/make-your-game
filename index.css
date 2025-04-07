@@ -17,6 +17,12 @@
   gap: 50px;
   background-image: linear-gradient(to top, #00eefb, #f738fc);
 }
+.score-board{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .grid {
   width: 800px;
   height: 700px;
@@ -32,7 +38,7 @@
 h1 {
   font-family: "PixelFont";
 }
-#score {
+#score,.time {
   font-size: 2em;
   font-weight: bold;
   color: white;
@@ -43,21 +49,31 @@ h1 {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.board {
-  width: 200px;
+.paddle {
+  width: 180px;
   height: 30px;
   background-color: #f738fc;
   position: absolute;
   border-radius: 8px;
-  animation-name: shadow;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+  position: absolute;
 }
-@keyframes shadow {
-  from {
-    box-shadow: #f738fc 10px 15px 60px 10px;
+.ball{
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+}
+/* .life img{
+
+} */
+@media screen and (min-width: 820px) {
+  .grid {
+    width: 730px;
+    height: 536px;
+    position: relative;
   }
-  to {
-    box-shadow: #00eefb 10px 15px 60px 10px;
+  .container {
+    gap: 20px;
   }
 }

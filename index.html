@@ -8,15 +8,20 @@
   </head>
   <body>
     <div class="container">
-      <h1>2D Breakout</h1>
+      <h1>2D Brick Breaker</h1>
       <div class="game">
-        <div id="score">0</div>
+        <div class="score-board">
+          <div id="score">0</div>
+          <div class="time">00:00</div>
+          <div class="life"><span class="nb-life"></span><img src="./images/life.png"></div>
+        </div>
         <div class="grid">
           <div class="blocks"></div>
-          <div class="board"></div>
+          <div class="paddle"></div>
+          <div class="ball"></div>
         </div>
       </div>
     </div>
   </body>
-  <script src="./index.js"></script>
+  <script src="./index.js" type="module"></script>
 </html>
