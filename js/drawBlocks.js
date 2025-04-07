@@ -11,12 +11,15 @@ const PaddleMB = 30;
 let leftClicked = false;
 let rightClicked = false;
 let gameStarted = false;
-let speed = 8;
+let speedPaddle = 8;
+let speedBall = 4;
 
 document.addEventListener("keyup", function start(e) {
   if (e.key === " ") {
-    ballDetails.velocityX = -3;
-    ballDetails.velocityY = 3;
+    const p = [-speedBall, speedBall, 0];
+    let i = Math.floor(Math.random() * p.length);
+    ballDetails.velocityX = p[i];
+    ballDetails.velocityY = speedBall;
     gameStarted = true;
     document.removeEventListener("keyup", start);
   }
@@ -76,11 +79,17 @@ function moveBall() {
   let boundriesPadlle = paddle.getBoundingClientRect();
 
   if (
-    boundriesBall.bottom >= boundriesPadlle.top &&
+    boundriesBall.bottom > boundriesPadlle.top &&
     boundriesBall.right >= boundriesPadlle.left &&
     boundriesBall.left <= boundriesPadlle.right
   ) {
+    let collidePoint =
+      boundriesBall.x - (boundriesPadlle.x + boundriesPadlle.width / 2);
+    collidePoint = collidePoint / (boundriesPadlle.width / 2);
+    let angle = collidePoint * (Math.PI / 3);
+
     ballDetails.velocityY = Math.abs(ballDetails.velocityY);
+    ballDetails.velocityX = 3 * Math.sin(angle);
   }
 
   if (startX + ballDetails.x + ball.clientWidth > grid.clientWidth) {
@@ -88,28 +97,36 @@ function moveBall() {
   } else if (startY + ballDetails.y <= 0) {
     ballDetails.velocityY *= -1;
   } else if (startY + ballDetails.y + ball.clientHeight >= grid.clientHeight) {
+    console.log("zz");
+
     ballDetails.velocityY *= -1;
   } else if (startX + ballDetails.x <= 0) {
     ballDetails.velocityX *= -1;
   }
   ball.style.transform = `translateX(${ballDetails.x}px) translateY( ${ballDetails.y}px)`;
 }
-
-function gameLoop() {
-  moveBall();
+function movePaddle() {
   if (rightClicked) {
     if (
-      paddleDetails.x + paddleDetails.translateX + speed + paddle.clientWidth <
+      paddleDetails.x +
+        paddleDetails.translateX +
+        speedPaddle +
+        paddle.clientWidth <
       grid.clientWidth
     ) {
-      paddleDetails.translateX += speed;
+      paddleDetails.translateX += speedPaddle;
     }
   }
   if (leftClicked) {
-    if (paddleDetails.x + paddleDetails.translateX - speed >= 0) {
-      paddleDetails.translateX -= speed;
+    if (paddleDetails.x + paddleDetails.translateX - speedPaddle >= 0) {
+      paddleDetails.translateX -= speedPaddle;
     }
   }
   paddle.style.transform = `translateX(${paddleDetails.translateX}px)`;
+}
+
+function gameLoop() {
+  movePaddle();
+  moveBall();
   requestAnimationFrame(gameLoop);
 }
