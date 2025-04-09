@@ -24,38 +24,31 @@
   align-items: center;
 }
 .grid {
-  width: 800px;
+  min-width: 730px;
   height: 600px;
   border: 2px solid #00eefb;
   background-image: url("./images/bg.jpeg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 7px 14px;
   position: relative;
-  overflow: hidden;
 }
-h1 {
-  font-family: "PixelFont";
-}
+
 #score,
 .time,
 .life {
   font-size: 2em;
   font-weight: bold;
   color: white;
-  font-family: "PixelFont";
   display: flex;
   align-items: center;
+}
+h1 {
+  font-family: "PixelFont";
 }
 #score img {
   width: 45px;
   height: 45px;
-}
-.blocks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
 }
 .paddle {
   width: 180px;
@@ -75,14 +68,4 @@ h1 {
 .life img {
   width: 50px;
   height: 50px;
-}
-@media screen and (min-width: 820px) {
-  .grid {
-    width: 730px;
-    height: 536px;
-    position: relative;
-  }
-  .container {
-    gap: 20px;
-  }
 }

@@ -1,3 +1,3 @@
-import { Game } from "./js/drawBlocks.js";
+import { Game } from "./js/GameLoop.js";
 
 Game();
