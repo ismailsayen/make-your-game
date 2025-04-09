@@ -4,6 +4,7 @@ import { BottomColid } from "./collsionWithBlocks.js";
 const grid = document.querySelector(".grid");
 const paddle = document.querySelector(".paddle");
 const ball = document.querySelector(".ball");
+const b = document.querySelector(".blocks");
 let nbLife = document.querySelector(".nb-life");
 let numOfLife = 4;
 
@@ -135,12 +136,17 @@ function movePaddle() {
 }
 function colidation() {
   const ballBoundries = ball.getBoundingClientRect();
-  for (let i = 0; i < blocksArray.length; i++) {
-    const blocks = document.querySelectorAll(".blocks div");
-    let blockBoundries = blocks[i].getBoundingClientRect();
 
-    if (BottomColid(ballBoundries, blockBoundries)) {
+  const blocks = document.querySelectorAll(".blocks div");
+  for (let i = 0; i < blocks.length; i++) {
+    let blockBoundries = blocks[i].getBoundingClientRect();
+    if (blocksArray[i] && BottomColid(ballBoundries, blockBoundries)) {
+      let index = blocks[i].getAttribute("data-index");
+
       ballDetails.velocityY *= -1;
+      blocksArray[index].isBroken = true;
+      b.textContent = "";
+      DrawBlocks();
     }
   }
 }
@@ -148,6 +154,5 @@ function gameLoop() {
   movePaddle();
   moveBall();
   colidation();
-
   requestAnimationFrame(gameLoop);
 }

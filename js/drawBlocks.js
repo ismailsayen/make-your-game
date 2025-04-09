@@ -4,8 +4,8 @@ let colors = ["#00eefb", "#f738fc"];
 
 export let blocksArray = [];
 let blocksDetails = {
-  c: 1,
-  r: 1,
+  c: 5,
+  r: 4,
   bWidth: grid.clientWidth / 5 - 22,
   bHeight: 20,
   bx: 15,
@@ -22,7 +22,7 @@ function MakeBlocks() {
         width: blocksDetails.bWidth,
         height: blocksDetails.bHeight,
         background: colors[i],
-        break: false,
+        isBroken: false,
       };
       blocksArray.push(block);
     }
@@ -32,7 +32,7 @@ MakeBlocks();
 export function DrawBlocks() {
   for (let i = 0; i < blocksArray.length; i++) {
     let block = document.createElement("div");
-    if (!blocksArray[i].break) {
+    if (!blocksArray[i].isBroken) {
       block.style.cssText = /*style*/ `
           width: ${blocksArray[i].width}px;
           height: ${blocksArray[i].height}px;
@@ -44,6 +44,7 @@ export function DrawBlocks() {
           left:${blocksArray[i].x}px;
           top:${blocksArray[i].y}px;
       `;
+      block.setAttribute("data-index",i)
       blocks.appendChild(block);
     }
   }
