@@ -2,17 +2,16 @@ const blocks = document.querySelector(".blocks");
 const grid = document.querySelector(".grid");
 const paddle = document.querySelector(".paddle");
 const ball = document.querySelector(".ball");
-
+let nbLife = document.querySelector(".nb-life");
+let numOfLife = 3;
 const blockWidth = grid.clientWidth / 6;
 const startX = grid.clientWidth / 2 - ball.clientHeight / 2;
-const startY =
-  grid.clientHeight - paddle.clientHeight - ball.clientHeight * 2.3;
-const PaddleMB = 20;
+const startY = grid.clientHeight - paddle.clientHeight - ball.clientHeight * 2;
 let leftClicked = false;
 let rightClicked = false;
 let gameStarted = false;
 let speedPaddle = 8;
-let speedBall = 4;
+let speedBall = 5;
 
 document.addEventListener("keyup", function start(e) {
   if (e.key === " ") {
@@ -36,7 +35,7 @@ document.addEventListener("keyup", (e) => {
 
 const paddleDetails = {
   x: grid.clientWidth / 2 - paddle.clientWidth / 2,
-  y: grid.clientHeight - paddle.clientHeight - PaddleMB,
+  y: grid.clientHeight - paddle.clientHeight - 10,
   translateX: 0,
 };
 const ballDetails = {
@@ -45,8 +44,8 @@ const ballDetails = {
   velocityX: 0,
   velocityY: 0,
 };
-let colors = ["#00eefb", "#f738fc"];
 function DrawBlocks() {
+  let colors = ["#00eefb", "#f738fc"];
   for (let i = 0; i < 5 * 4; i++) {
     let color = Math.floor(Math.random() * colors.length);
     const block = document.createElement("div");
@@ -66,31 +65,35 @@ function DrawBlocks() {
 export function Game() {
   paddle.style.top = `${paddleDetails.y}px`;
   paddle.style.left = `${paddleDetails.x}px`;
-  DrawBlocks();
   ball.style.left = `${startX}px`;
   ball.style.top = `${startY}px`;
-
+  DrawBlocks();
+  nbLife.textContent = numOfLife;
   requestAnimationFrame(gameLoop);
 }
+
 function moveBall() {
   ballDetails.x += ballDetails.velocityX;
   ballDetails.y -= ballDetails.velocityY;
+  BallColid();
+  ball.style.transform = `translateX(${ballDetails.x}px) translateY( ${ballDetails.y}px)`;
+}
+function BallColid() {
   let boundriesBall = ball.getBoundingClientRect();
   let boundriesPadlle = paddle.getBoundingClientRect();
-
   if (
     boundriesBall.bottom + speedBall > boundriesPadlle.top &&
     boundriesBall.right >= boundriesPadlle.left &&
     boundriesBall.left <= boundriesPadlle.right &&
-    boundriesBall.top <= boundriesPadlle.bottom
+    boundriesBall.top <= boundriesPadlle.bottom &&
+    gameStarted
   ) {
     let collidePoint =
       boundriesBall.x - (boundriesPadlle.x + boundriesPadlle.width / 2);
     collidePoint = collidePoint / (boundriesPadlle.width / 2);
     let angle = collidePoint * (Math.PI / 3);
-
     ballDetails.velocityY = Math.abs(ballDetails.velocityY);
-    ballDetails.velocityX = 3 * Math.sin(angle);
+    ballDetails.velocityX = speedBall * Math.sin(angle);
   }
 
   if (startX + ballDetails.x + ball.clientWidth > grid.clientWidth) {
@@ -98,30 +101,29 @@ function moveBall() {
   } else if (startY + ballDetails.y <= 0) {
     ballDetails.velocityY *= -1;
   } else if (startY + ballDetails.y + ball.clientHeight >= grid.clientHeight) {
-    gameStarted = false;
-    leftClicked = false;
-    rightClicked = false;
-    paddleDetails.translateX = 0;
-    paddle.style.transform = `translateX(${paddleDetails.translateX}px)`;
-    ballDetails.x = 0;
-    ballDetails.y = 0;
-    ballDetails.velocityX = 0;
-    ballDetails.velocityY = 0;
-    ball.style.transform = `translateX(${ballDetails.x}px) translateY(${ballDetails.y}px)`;
-    document.addEventListener("keyup", function start(e) {
-      if (e.key === " ") {
-        const p = [-speedBall, speedBall, 0];
-        let i = Math.floor(Math.random() * p.length);
-        ballDetails.velocityX = p[i];
-        ballDetails.velocityY = speedBall;
-        gameStarted = true;
-        document.removeEventListener("keyup", start);
-      }
-    });
   } else if (startX + ballDetails.x <= 0) {
     ballDetails.velocityX *= -1;
   }
-  ball.style.transform = `translateX(${ballDetails.x}px) translateY( ${ballDetails.y}px)`;
+}
+function Life() {
+  gameStarted = false;
+  leftClicked = false;
+  rightClicked = false;
+  paddleDetails.translateX = 0;
+  ballDetails.x = 0;
+  ballDetails.y = 0;
+  ballDetails.velocityX = 0;
+  ballDetails.velocityY = 0;
+  document.addEventListener("keyup", function start(e) {
+    if (e.key === " ") {
+      const p = [-speedBall, speedBall, 0];
+      let i = Math.floor(Math.random() * p.length);
+      ballDetails.velocityX = p[i];
+      ballDetails.velocityY = speedBall;
+      gameStarted = true;
+      document.removeEventListener("keyup", start);
+    }
+  });
 }
 function movePaddle() {
   if (rightClicked) {

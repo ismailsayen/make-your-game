@@ -25,7 +25,7 @@
 }
 .grid {
   width: 800px;
-  height: 700px;
+  height: 600px;
   border: 2px solid #00eefb;
   background-image: url("./images/bg.jpeg");
   background-position: center;
@@ -63,7 +63,6 @@ h1 {
   background-color: #f738fc;
   position: absolute;
   border-radius: 8px;
-  position: absolute;
 }
 .ball {
   width: 20px;
