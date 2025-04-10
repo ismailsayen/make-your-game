@@ -1,8 +1,13 @@
+// export function RightColid(ball, block) {
+//   return ball.left >= block.y + block.height;
+// }
 export function Leftcolid(ball, block) {
-  return ball.left >= block.y + block.height;
-}
-export function RightColid(block) {
-  return ball.right <= block.x;
+  return (
+    ball.x + ball.width >= block.x &&
+    ball.x < block.x &&
+    ball.bottom > block.top &&
+    ball.top < block.bottom
+  );
 }
 export function BottomColid(ball, block) {
   return (
