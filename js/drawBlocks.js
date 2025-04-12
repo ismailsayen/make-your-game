@@ -5,8 +5,8 @@ let colors = ["#00eefb", "#f738fc"];
 export let blocksArray = [];
 let blocksDetails = {
   c: 5,
-  r: 5,
-  bWidth: grid.clientWidth / 5 - 22,
+  r: 4,
+  bWidth: grid.clientWidth / 5 - 20,
   bHeight: 20,
   bx: 15,
   by: 45,
@@ -43,8 +43,9 @@ export function DrawBlocks() {
           position:absolute;
           left:${blocksArray[i].x}px;
           top:${blocksArray[i].y}px;
+          z-index:2;
       `;
-      block.setAttribute("data-index",i)
+      block.setAttribute("data-index", i);
       blocks.appendChild(block);
     }
   }

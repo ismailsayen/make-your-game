@@ -1,12 +1,14 @@
 import { DrawBlocks, blocksArray } from "./drawBlocks.js";
-import { BottomColid } from "./collsionWithBlocks.js";
-
+import { BottomColid, Leftcolid } from "./collsionWithBlocks.js";
+import { addScore } from "./score.js";
 const grid = document.querySelector(".grid");
 const paddle = document.querySelector(".paddle");
 const ball = document.querySelector(".ball");
 const b = document.querySelector(".blocks");
-let nbLife = document.querySelector(".nb-life");
-let numOfLife = 4;
+const scoreDiv = document.querySelector(".nb-star");
+const nbLife = document.querySelector(".nb-life");
+const playDiv = document.querySelector(".start");
+let numOfLife = 3;
 
 const startX = grid.clientWidth / 2 - ball.clientHeight / 2;
 const startY = grid.clientHeight - paddle.clientHeight - ball.clientHeight * 2;
@@ -23,6 +25,7 @@ document.addEventListener("keyup", function start(e) {
     ballDetails.velocityX = p[i];
     ballDetails.velocityY = speedBall;
     gameStarted = true;
+    playDiv.style.opacity = "0";
     document.removeEventListener("keyup", start);
   }
 });
@@ -49,12 +52,12 @@ const ballDetails = {
 };
 
 export function Game() {
-  numOfLife--;
   nbLife.textContent = numOfLife;
   paddle.style.top = `${paddleDetails.y}px`;
   paddle.style.left = `${paddleDetails.x}px`;
   ball.style.left = `${startX}px`;
   ball.style.top = `${startY}px`;
+  scoreDiv.textContent = 0;
   DrawBlocks();
   requestAnimationFrame(gameLoop);
 }
@@ -136,20 +139,25 @@ function movePaddle() {
 }
 function colidation() {
   const ballBoundries = ball.getBoundingClientRect();
-
   const blocks = document.querySelectorAll(".blocks div");
   for (let i = 0; i < blocks.length; i++) {
-    let blockBoundries = blocks[i].getBoundingClientRect();
-    if (blocksArray[i] && BottomColid(ballBoundries, blockBoundries)) {
+    const repaint = (axe) => {
       let index = blocks[i].getAttribute("data-index");
-
-      ballDetails.velocityY *= -1;
+      ballDetails[axe] *= -1;
       blocksArray[index].isBroken = true;
       b.textContent = "";
       DrawBlocks();
+      addScore();
+    };
+    let blockBoundries = blocks[i].getBoundingClientRect();
+    if (blocksArray[i] && BottomColid(ballBoundries, blockBoundries)) {
+      repaint("velocityY");
+    } else if (blocksArray[i] && Leftcolid(ballBoundries, blockBoundries)) {
+      repaint("velocityX");
     }
   }
 }
+
 function gameLoop() {
   movePaddle();
   moveBall();
