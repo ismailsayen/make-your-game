@@ -4,7 +4,7 @@ let colors = ["#00eefb", "#f738fc"];
 
 export let blocksArray = [];
 let blocksDetails = {
-  c: 5,
+  c: 6,
   r: 4,
   bWidth: grid.clientWidth / 5 - 20,
   bHeight: 20,
